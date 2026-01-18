@@ -65,7 +65,7 @@ const workerConfig: WorkerConfig = {
     // },
     {
       id: 'blog',
-      name: '博客（目前入口阿里云）',
+      name: '博客（阿里云ESA）',
       method: 'HEAD',
       target: 'https://blog.zer0e.com/',
       statusPageLink: 'https://blog.zer0e.com/',
