@@ -100,7 +100,7 @@ const workerConfig: WorkerConfig = {
       target: 'https://console.aliyun.com/',
       statusPageLink: 'https://console.aliyun.com/',
       hideLatencyChart: false,
-      expectedCodes: [302],
+      expectedCodes: [200],
       timeout: 10000,
     },
     {
@@ -110,7 +110,7 @@ const workerConfig: WorkerConfig = {
       target: 'https://console.alibabacloud.com/',
       statusPageLink: 'https://console.alibabacloud.com/',
       hideLatencyChart: false,
-      expectedCodes: [302],
+      expectedCodes: [200],
       timeout: 10000,
     },
     {
@@ -120,7 +120,7 @@ const workerConfig: WorkerConfig = {
       target: 'https://oss-cn-hangzhou.aliyuncs.com/',
       statusPageLink: 'https://oss-cn-hangzhou.aliyuncs.com/',
       hideLatencyChart: false,
-      expectedCodes: [403],
+      expectedCodes: [404],
       timeout: 10000,
     },
     // {
