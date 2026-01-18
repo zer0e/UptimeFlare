@@ -75,10 +75,10 @@ const workerConfig: WorkerConfig = {
     },
     {
       id: 'blog_eo',
-      name: '博客（EdgeOne Pages国内节点）',
+      name: '博客（EdgeOne Pages）',
       method: 'HEAD',
-      target: 'https://blog-tencent.zer0e.com/',
-      statusPageLink: 'https://blog-tencent.zer0e.com/',
+      target: 'https://blog-eo.zer0e.com/',
+      statusPageLink: 'https://blog-eo.zer0e.com/',
       hideLatencyChart: false,
       expectedCodes: [200],
       timeout: 10000,
