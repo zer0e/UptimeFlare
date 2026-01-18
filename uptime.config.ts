@@ -123,6 +123,16 @@ const workerConfig: WorkerConfig = {
       expectedCodes: [404],
       timeout: 10000,
     },
+        {
+      id: 'aliyun_oss_beijing',
+      name: '阿里云OSS北京',
+      method: 'HEAD',
+      target: 'https://oss-cn-beijing.aliyuncs.com/',
+      statusPageLink: 'https://oss-cn-beijing.aliyuncs.com/',
+      hideLatencyChart: false,
+      expectedCodes: [200],
+      timeout: 10000,
+    },
     // {
     //   id: 'umami_nas',
     //   name: 'Umami（NAS）',
@@ -264,7 +274,7 @@ const workerConfig: WorkerConfig = {
       // $MSG will be replaced with the human-readable notification message
       payload: {
         "from": "系统状态更新 <uptimeflare@zer0e.com>",
-        "to": ["admin@zer0e.com"],
+        "to": ["monitor@zer0e.com"],
         "subject": "UptimeFlare 状态更新",
         "text": "$MSG"
       },
