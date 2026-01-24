@@ -120,7 +120,7 @@ const workerConfig: WorkerConfig = {
       target: 'https://oss-cn-hangzhou.aliyuncs.com/',
       statusPageLink: 'https://oss-cn-hangzhou.aliyuncs.com/',
       hideLatencyChart: false,
-      expectedCodes: [404],
+      expectedCodes: [404, 403],
       timeout: 10000,
     },
     // {
