@@ -1,5 +1,5 @@
 import { MonitorTarget } from '../../types/config'
-import { withTimeout, fetchTimeout } from './util'
+import { withTimeout, fetchTimeout, getHostDnsResult } from './util'
 
 async function httpResponseBasicCheck(
   monitor: MonitorTarget,
@@ -248,7 +248,7 @@ export async function getStatus(
     err: 'Unknown',
   }
 
-  const startTime = Date.now()
+  let startTime = Date.now()
 
   if (monitor.method === 'TCP_PING') {
     // TCP port endpoint monitor
@@ -278,8 +278,12 @@ export async function getStatus(
       status.err = e.name + ': ' + e.message
     }
   } else {
+    // get dns result
+    await getHostDnsResult(monitor.target);
+
     // HTTP endpoint monitor
     try {
+      startTime = Date.now();
       let headers = new Headers(monitor.headers as any)
       if (!headers.has('user-agent')) {
         headers.set('user-agent', 'UptimeFlare/1.0 (+https://github.com/lyc8503/UptimeFlare)')

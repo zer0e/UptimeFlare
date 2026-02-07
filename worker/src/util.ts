@@ -1,5 +1,6 @@
 import { MonitorTarget, WebhookConfig } from '../../types/config'
 import { maintenances, workerConfig } from '../../uptime.config'
+import dns from 'dns/promises';
 
 async function getWorkerLocation() {
   const res = await fetch('https://cloudflare.com/cdn-cgi/trace')
@@ -19,6 +20,49 @@ const fetchTimeout = (
   if (signal) signal.addEventListener('abort', () => controller.abort())
   const timeout = setTimeout(() => controller.abort(), ms)
   return promise.finally(() => clearTimeout(timeout))
+}
+
+async function getHostDnsResult(url) {
+  try{
+    const hostname = new URL(url).hostname;
+    const result = await getFinalIP(hostname);
+    console.log(`原始: ${result.original}, 最终: ${result.finalHostname}, IP: ${result.ipAddresses.map(a => `${a.address}(IPv${a.family})`).join(', ')}`);
+    return result;
+  }catch (e) {
+    console.error(`get host ${url} dns result err ` + e)
+  }
+  
+}
+
+async function getFinalIP(hostname) {
+  let current = hostname;
+  const visited = new Set(); // 防止循环
+  
+  while (!visited.has(current)) {
+    visited.add(current);
+    
+    try {
+      // 尝试获取 CNAME
+      const cnames = await dns.resolveCname(current);
+      if (cnames && cnames.length > 0) {
+        // console.log(`${current} -> CNAME -> ${cnames[0]}`);
+        current = cnames[0];
+        continue;
+      }
+    } catch (error) {
+      // 没有 CNAME 记录，继续
+    }
+    
+    // 获取 IP 地址
+    const addresses = await dns.lookup(current, { all: true });
+    return {
+      original: hostname,
+      finalHostname: current,
+      ipAddresses: addresses
+    };
+  }
+  
+  throw new Error(`检测到 DNS 循环: ${Array.from(visited).join(' -> ')}`);
 }
 
 function withTimeout<T>(millis: number, promise: Promise<T>): Promise<T> {
@@ -217,4 +261,5 @@ export {
   webhookNotify,
   formatStatusChangeNotification,
   formatAndNotify,
+  getHostDnsResult
 }
