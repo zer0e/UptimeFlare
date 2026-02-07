@@ -22,7 +22,7 @@ const fetchTimeout = (
   return promise.finally(() => clearTimeout(timeout))
 }
 
-async function getHostDnsResult(url) {
+async function getHostDnsResult(url: string) {
   try{
     const hostname = new URL(url).hostname;
     const result = await getFinalIP(hostname);
@@ -34,7 +34,7 @@ async function getHostDnsResult(url) {
   
 }
 
-async function getFinalIP(hostname) {
+async function getFinalIP(hostname: string) {
   let current = hostname;
   const visited = new Set(); // 防止循环
   
