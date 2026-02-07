@@ -7,6 +7,8 @@ const express = require('express')
 const net = require('net')
 const app = express()
 const port = 3000
+const dns = require('dns');
+const { lookup } = dns.promises;
 
 async function getWorkerLocation() {
   const res = await fetch('https://cloudflare.com/cdn-cgi/trace')
@@ -23,6 +25,16 @@ const fetchTimeout = (url, ms, options = {}) => {
   return promise.finally(() => clearTimeout(timeout))
 }
 
+async function getHostDnsResult(url) {
+  try {
+    const hostname = new URL(url).hostname;
+    const addresses = await lookup(hostname, { all: true });
+    console.log(`${url} 解析到的 IP 地址: ` + addresses.map(addr => `${addr.address} (IPv${addr.family})`).join('\t'));
+  }catch (e) {
+    console.log(`get target ${url} ip err: ${e.message}`)
+  }
+}
+
 // TODO: More code reuse here
 async function getStatus(monitor) {
   let status = {
@@ -31,7 +43,7 @@ async function getStatus(monitor) {
     err: 'Unknown',
   }
 
-  const startTime = Date.now()
+  let startTime = Date.now()
 
   if (monitor.method === 'TCP_PING') {
     // TCP port endpoint monitor
@@ -76,6 +88,10 @@ async function getStatus(monitor) {
   } else {
     // HTTP endpoint monitor
     try {
+      // 增加IP地址获取
+      await getHostDnsResult(monitor.target);
+
+      startTime = Date.now();
       const response = await fetchTimeout(monitor.target, monitor.timeout || defaultTimeout, {
         method: monitor.method,
         headers: monitor.headers,
