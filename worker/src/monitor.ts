@@ -313,12 +313,13 @@ export async function getStatus(
       } catch (e) {} // Always try to cancel body, see issue #166
 
       if (err !== null) {
-        console.log(`${monitor.name} didn't pass response check: ${err}`)
+        console.error(`${monitor.name} didn't pass response check: ${err}`)
+        console.error(`response headers: ${response.headers}`)
       }
       status.up = err === null
       status.err = err ?? ''
     } catch (e: any) {
-      console.log(`${monitor.name} errored with ${e.name}: ${e.message}`)
+      console.error(`${monitor.name} errored with ${e.name}: ${e.message}`)
       if (e.name === 'AbortError') {
         status.ping = monitor.timeout || 10000
         status.up = false
