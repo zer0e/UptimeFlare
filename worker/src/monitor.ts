@@ -299,7 +299,6 @@ export async function getStatus(
           },
         },
       })
-
       console.log(`${monitor.name} responded with ${response.status}`)
       status.ping = Date.now() - startTime
 
@@ -314,7 +313,7 @@ export async function getStatus(
 
       if (err !== null) {
         console.error(`${monitor.name} didn't pass response check: ${err}`)
-        console.error(`response headers: ${response.headers}`)
+        console.error(`response headers: ` + JSON.stringify([...response.headers.entries()]))
       }
       status.up = err === null
       status.err = err ?? ''
