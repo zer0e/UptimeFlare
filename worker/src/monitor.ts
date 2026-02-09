@@ -313,7 +313,7 @@ export async function getStatus(
 
       if (err !== null) {
         console.error(`${monitor.name} didn't pass response check: ${err}`)
-        console.error(`response headers: ` + JSON.stringify([...response.headers.entries()]))
+        console.error(`response headers: ` + JSON.stringify(Object.fromEntries(response.headers)))
       }
       status.up = err === null
       status.err = err ?? ''
