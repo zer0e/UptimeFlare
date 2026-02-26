@@ -279,7 +279,7 @@ export async function getStatus(
     }
   } else {
     // get dns result
-    await getHostDnsResult(monitor.target);
+    // await getHostDnsResult(monitor.target);
 
     // HTTP endpoint monitor
     try {
