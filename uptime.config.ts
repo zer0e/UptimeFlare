@@ -133,6 +133,16 @@ const workerConfig: WorkerConfig = {
       expectedCodes: [404, 403, 525],
       timeout: 10000,
     },
+    {
+      id: 'aliyun_oss_hongkong',
+      name: '阿里云OSS香港',
+      method: 'HEAD',
+      target: 'https://oss-cn-hongkong.aliyuncs.com/',
+      statusPageLink: 'https://oss-cn-hongkong.aliyuncs.com/',
+      hideLatencyChart: false,
+      expectedCodes: [404, 403, 525],
+      timeout: 10000,
+    },
     // {
     //   id: 'aliyun_oss_beijing',
     //   name: '阿里云OSS北京',
