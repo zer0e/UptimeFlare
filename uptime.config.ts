@@ -64,9 +64,19 @@ const workerConfig: WorkerConfig = {
     //   timeout: 10000,
     // },
     {
+      id: 'main',
+      name: '主页',
+      method: 'GET',
+      target: 'https://zer0e.com/',
+      statusPageLink: 'https://zer0e.com/',
+      hideLatencyChart: false,
+      expectedCodes: [200],
+      timeout: 10000,
+    },
+    {
       id: 'blog',
       name: '博客（自动分流）',
-      method: 'HEAD',
+      method: 'GET',
       target: 'https://blog.zer0e.com/',
       statusPageLink: 'https://blog.zer0e.com/',
       hideLatencyChart: false,
@@ -76,7 +86,7 @@ const workerConfig: WorkerConfig = {
     {
       id: 'blog_esa',
       name: '博客（阿里云ESA）',
-      method: 'HEAD',
+      method: 'GET',
       target: 'https://blog-esa.zer0e.com/',
       statusPageLink: 'https://blog-esa.zer0e.com/',
       hideLatencyChart: false,
@@ -86,7 +96,7 @@ const workerConfig: WorkerConfig = {
     {
       id: 'blog_eo',
       name: '博客（EdgeOne Pages）',
-      method: 'HEAD',
+      method: 'GET',
       target: 'https://blog-eo.zer0e.com/',
       statusPageLink: 'https://blog-eo.zer0e.com/',
       hideLatencyChart: false,
@@ -96,7 +106,7 @@ const workerConfig: WorkerConfig = {
     {
       id: 'blog_cf',
       name: '博客（Cloudflare Pages海外节点）',
-      method: 'HEAD',
+      method: 'GET',
       target: 'https://blog-cf.zer0e.com/',
       statusPageLink: 'https://blog-cf.zer0e.com/',
       hideLatencyChart: false,
